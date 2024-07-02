@@ -62,7 +62,7 @@ const deleteMember = async (req, res) => {
         return res.status(404).json({error: `No entry with id ${member_id}`})
     }
 
-    const member = await RoomMember.findOneAndDelete({_id: member_id})
+    const member = await Member.findOneAndDelete({_id: member_id})
     if (!member) {
         return res.status(404).json({error: 'Member does not exist'})
     }
@@ -70,9 +70,25 @@ const deleteMember = async (req, res) => {
     res.status(200).json(member)
 }
 
+const deleteMembers = async (req, res) => {
+    const { room_id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(room_id)) {
+        return res.status(404).json({error: `No entry with id ${room_id}`})
+    }
+    
+    const members = await Member.deleteMany({room: room_id})
+    if (!members) {
+        return res.status(404).json({error: 'Member does not exist'})
+    }
+
+    res.status(200).json(members)
+}
+
 module.exports = {
     getMembersByRoom,
     getMembersByUser,
     createMember,
-    deleteMember
+    deleteMember,
+    deleteMembers
 }

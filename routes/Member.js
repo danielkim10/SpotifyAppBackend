@@ -5,7 +5,8 @@ const {
     getMembersByRoom,
     getMembersByUser,
     createMember,
-    deleteMember
+    deleteMember,
+    deleteMembers
 } = require('../controllers/MemberController')
 
 router.get('/room/:room_id', getMembersByRoom)
@@ -14,5 +15,7 @@ router.get('/user/:user_id', getMembersByUser)
 router.post('/', createMember)
 
 router.delete('/:member_id', deleteMember)
+
+router.delete('/room/:room_id', deleteMembers)
 
 module.exports = router
