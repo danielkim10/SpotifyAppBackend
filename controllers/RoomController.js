@@ -28,7 +28,7 @@ const getRoom = async(req, res) => {
 
 const getRoomByPassword = async(req,res) => {
     const { password } = req.body
-    const room = await Room.find({password: password}).populate('owner')
+    const room = await Room.findOne({password: password}).populate('owner')
 
     if (!room) {
         return res.status(404).json({
