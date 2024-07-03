@@ -35,6 +35,10 @@ module.exports = (io, socket) => {
         io.to(roomID).emit("server:user-stop-editing-playlist", data)
     }
 
+    const roomDeleted = (roomID) => {
+        io.to(roomID).emit("server:room-deleted")
+    }
+
     socket.on("client:create-playlist", createPlaylist)
     socket.on("client:edit-playlist", editPlaylist)
     socket.on("client:delete-playlist", deletePlaylist)
@@ -45,4 +49,5 @@ module.exports = (io, socket) => {
 
     socket.on("client:user-editing-playlist", userEditingPlaylist)
     socket.on("client-user-stop-editing-playlist", userStopEditingPlaylist)
+    socket.on("client:delete-room", roomDeleted)
 }
