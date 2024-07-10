@@ -75,10 +75,12 @@ const callback = (req, res) => {
 }
 
 const refreshToken = (req, res) => {
-    var refresh_token = req.query.refresh_token
+    var refresh_token = req.params.refresh_token
     var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
-        headers: { 'Authorization': 'Basic ' + (new Buffer.from(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64')) },
+        headers: { 
+            'Authorization': 'Basic ' + (new Buffer.from(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64')) 
+        },
         form: {
             grant_type: 'refresh_token',
             refresh_token: refresh_token
@@ -90,11 +92,12 @@ const refreshToken = (req, res) => {
         if (!error && response.statusCode === 200) {
             res.cookie('access_token', body.access_token)
             res.cookie('expiry_time', calculateExpiryTime(body.expires_in))
+            res.redirect('http://localhost:3000/lobby')
         }
         else {
             console.log("There was an error refreshing the access token, redirecting to the login")
             console.log(`error ${response.statusCode}`)
-            res.error(response.statusCode)
+            res.redirect('http://localhost:3000/')
         }
     })
 }

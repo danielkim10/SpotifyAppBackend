@@ -12,6 +12,6 @@ const {
 
 router.get('/login', login)
 router.get('/callback', callback)
-router.get('/refresh_token', refreshToken)
+router.get('/refresh_token/:refresh_token', refreshToken)
 
 module.exports = router
