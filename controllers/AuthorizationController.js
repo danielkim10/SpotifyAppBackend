@@ -90,14 +90,10 @@ const refreshToken = (req, res) => {
 
     request.post(authOptions, (error, response, body) => {
         if (!error && response.statusCode === 200) {
-            res.cookie('access_token', body.access_token)
-            res.cookie('expiry_time', calculateExpiryTime(body.expires_in))
-            res.redirect('http://localhost:3000/lobby')
+            res.status(200).json({ new_access_token: body.access_token, new_expiry_time: calculateExpiryTime(body.expires_in) })
         }
         else {
-            console.log("There was an error refreshing the access token, redirecting to the login")
-            console.log(`error ${response.statusCode}`)
-            res.redirect('http://localhost:3000/')
+            res.status(response.statusCode).json({ new_access_token: "", new_expiry_time: 0})
         }
     })
 }
