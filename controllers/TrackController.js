@@ -4,6 +4,8 @@ const Track = require('../models/Track')
 
 const getTracksInPlaylist = async(req, res) => {
     const { playlist_id } = req.params
+    const page = req.query.page
+    const limit = 10
 
     const playlist = await Playlist.findById(playlist_id)
 
@@ -11,7 +13,7 @@ const getTracksInPlaylist = async(req, res) => {
         return res.status(404).json({error: `No playlist with id ${playlist_id}`})
     }
 
-    const tracks = await Track.find({playlist: playlist._id});
+    const tracks = await Track.find({playlist: playlist._id}).skip(page * limit).limit(limit);
     res.status(200).json({items: tracks, message: `Returned tracks in playlist ${playlist._id}`})
 }
 
