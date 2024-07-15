@@ -8,7 +8,7 @@ const {
     deleteDownload
 } = require('../controllers/DownloadController')
 
-router.get('/:user_id/:room_id', getDownloadsUserRoom)
+router.get('/:user_id/:playlist_ids', getDownloadsUserRoom)
 
 router.post('/', createDownload)
 

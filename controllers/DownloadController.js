@@ -5,17 +5,20 @@ const Room = require('../models/Room')
 const User = require('../models/User')
 
 const getDownloadsUserRoom = async(req, res) => {
-    const { user_id, room_id } = req.params
+    const { user_id, playlist_ids } = req.params
 
-    const room = await Room.findById(room_id)
+    const playlistIDs = playlist_ids.split(",")
+    console.log(playlistIDs)
+
+    // const room = await Room.findById(room_id)
     const user = await User.findById(user_id)
 
-    if (!user || !room) {
+    if (!user) {
         return res.status(404).json({ error: `Missing entities` })
     }
 
-    const downloads = await Download.find({ user_id: user._id, room_id: room._id })
-    res.status(200).json({items: downloads, message: `Downloads found for user ${user._id} in room ${room._id}`})
+    const downloads = await Download.find({ user_id: user._id, playlist_id: { $in: playlistIDs } })
+    res.status(200).json({items: downloads, message: `Downloads found for user ${user._id}`})
 }
 
 const createDownload = async(req, res) => {
