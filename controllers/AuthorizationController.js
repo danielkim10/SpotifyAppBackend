@@ -19,7 +19,7 @@ const stateKey = 'spotify_auth_state'
 
 const login = (req, res) => {
     var state = generateRandomString(16)
-    var scope = 'streaming ugc-image-upload playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-library-modify user-library-read user-read-currently-playing user-read-playback-state user-read-private user-modify-playback-state'
+    var scope = 'ugc-image-upload playlist-modify-private playlist-modify-public'
     res.cookie(stateKey, state)
 
     var searchParams = new URLSearchParams({
