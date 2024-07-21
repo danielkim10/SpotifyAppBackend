@@ -3,8 +3,8 @@ module.exports = (io, socket) => {
         io.to(roomID).emit("server:create-playlist", data)
     }
 
-    const editPlaylist = () => {
-        io.to(roomID).emit("server:edit-playlist")
+    const editPlaylist = (data, roomID) => {
+        io.to(roomID).emit("server:edit-playlist", data, roomID)
     }
 
     const deletePlaylist = (data, roomID) => {
