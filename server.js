@@ -53,7 +53,6 @@ const socketIO = require('socket.io')(http, {
 })
 
 socketIO.on('connection', (socket) => {
-    console.log("Phantom connection")
     console.log(`${socket.id} user connected`)
 
     actionHandler(socketIO, socket)

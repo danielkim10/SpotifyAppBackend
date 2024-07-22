@@ -54,6 +54,21 @@ const editPlaylist = async(req, res) => {
     res.status(200).json(playlist)
 }
 
+const updatePlaylistTrackCount = async(req, res) => {
+    const { playlist_id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(playlist_id)) {
+        return res.status(404).json({error: `No playlist with id ${playlist_id}`})
+    }
+
+    const playlist = await Playlist.findOneAndUpdate({_id: playlist_id}, {
+        tracks: parseInt(req.body.tracks)
+    }, {new: true})
+
+    await (await playlist.populate("owner")).populate("room")
+    res.status(200).json(playlist)
+}
+
 const deletePlaylist = async(req, res) => {
     const { playlist_id } = req.params
 
@@ -74,5 +89,6 @@ module.exports = {
     getPlaylistsInRoom,
     createPlaylist,
     editPlaylist,
+    updatePlaylistTrackCount,
     deletePlaylist
 }

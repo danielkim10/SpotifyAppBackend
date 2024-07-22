@@ -2,8 +2,6 @@ module.exports = (io, socket) => {
     const joinRoom = (roomID) => {
         socket.join(roomID);
         console.log(`${socket.id} user joined room ${roomID}`)
-        // console.log(socket.rooms);
-        // console.log(roomID);
         io.to(roomID).emit('server:join-room', roomID)
     }
 

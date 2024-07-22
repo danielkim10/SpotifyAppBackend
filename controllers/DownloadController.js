@@ -8,9 +8,6 @@ const getDownloadsUserRoom = async(req, res) => {
     const { user_id, playlist_ids } = req.params
 
     const playlistIDs = playlist_ids.split(",")
-    console.log(playlistIDs)
-
-    // const room = await Room.findById(room_id)
     const user = await User.findById(user_id)
 
     if (!user) {
