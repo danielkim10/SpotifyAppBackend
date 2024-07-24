@@ -64,7 +64,7 @@ const callback = (req, res) => {
                 res.cookie('access_token', body.access_token)
                 res.cookie('expiry_time', calculateExpiryTime(body.expires_in))
                 res.cookie('refresh_token', body.refresh_token)
-                res.redirect('http://localhost:3000/lobby')
+                res.redirect('http://localhost:3000/home')
             }
             else {
                 console.log(`error ${response.statusCode}`)
