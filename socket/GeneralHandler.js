@@ -5,9 +5,9 @@ module.exports = (io, socket) => {
         io.to(roomID).emit('server:join-room', roomID)
     }
 
-    const leaveRoom = (roomID, userID) => {
-        socket.leave(roomID, userID)
-        io.to(roomID).emit('server:leave-room', roomID)
+    const leaveRoom = (roomID) => {
+        socket.leave(roomID)
+        // io.to(roomID).emit('server:leave-room', roomID)
         console.log(`${socket.id} user left room ${roomID}`)
     }
 
