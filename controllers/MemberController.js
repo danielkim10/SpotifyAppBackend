@@ -70,6 +70,17 @@ const deleteMember = async (req, res) => {
     res.status(200).json(member)
 }
 
+const deleteMemberByUser = async(req, res) => {
+    const { user_id, room_id } = req.params
+
+    const member = await Member.findOneAndDelete({ room: room_id, user: user_id })
+    if (!member) {
+        return res.status(404).json({error: 'Member does not exist'})
+    }
+
+    res.status(200).json(member)
+}
+
 const deleteMembers = async (req, res) => {
     const { room_id } = req.params
 
@@ -90,5 +101,6 @@ module.exports = {
     getMembersByUser,
     createMember,
     deleteMember,
+    deleteMemberByUser,
     deleteMembers
 }
