@@ -17,7 +17,7 @@ const getPlaylistsInRoom = async(req, res) => {
 }
 
 const createPlaylist = async(req, res) => {
-    const { name, description, roomID, userID, hidden } = req.body
+    const { name, description, roomID, userID, image, hidden } = req.body
 
     const room = await Room.findById(roomID)
     const user = await User.findById(userID)
@@ -27,7 +27,7 @@ const createPlaylist = async(req, res) => {
     }
 
     try {
-        let playlist = await Playlist.create({name, description, room: roomID, owner: userID, hidden})
+        let playlist = await Playlist.create({name, description, room: roomID, owner: userID, image: image, hidden})
         await (await playlist.populate("owner")).populate("room")
         res.status(200).json({ items: playlist, message: `Created playlist with id ${playlist._id}` })
     } catch (error) {
